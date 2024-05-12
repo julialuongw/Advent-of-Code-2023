@@ -48,11 +48,11 @@ with open(input_file_path, 'r') as infile:
     for line in infile:
         line = line[:-1]
 
-        # Find the first and last indices of each digit
+        # Find the first and last occurrences of each digit
         first_digit_pair = find_digit(line)
         last_digit_pair = find_digit(line, from_start=False)
 
-        # Find the first and last indices of each number word
+        # Find the first and last occurrences of each number-word
         first_word_pairs = []
         last_word_pairs = []
         for word in numbers_spelled_out:
