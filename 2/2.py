@@ -1,6 +1,8 @@
 import os
 
-# Read in the puzzle input and extract a sample for testing
+"""
+Read in the puzzle input and extract a sample for testing
+"""
 curr_dir = os.path.dirname(__file__)
 infile_path = os.path.join(curr_dir, "input.txt")
 
@@ -19,7 +21,7 @@ CUBE_MAX = {
     "BLUE": 14
 }
 def process_game_A(game: str) -> int:
-    # Extract the draws
+    # Extract the draws and save the prefix for return value later
     game_prefix_idx = game.find(": ")
     draws = game[game_prefix_idx + len(": "):].split("; ")
 
@@ -27,7 +29,7 @@ def process_game_A(game: str) -> int:
         # For each draw, extract a list of pairs of form [n, color]
         pairs = [pair.split(" ") for pair in draw.split(", ")]
         
-        # Assess each pair, updating the draw-minimum of this color as needed
+        # Assess each pair, returning impossible if any number exceeds the max of that color
         for pair in pairs:
             n, color = int(pair[0]), pair[1].upper()
             if n > CUBE_MAX[color]:
@@ -35,9 +37,6 @@ def process_game_A(game: str) -> int:
     
     # Game is possible -- return its id
     return int(game[:game_prefix_idx].replace("Game ", ""))
-
-# Testing
-# print(process_game(SAMPLE))
 
 # Solve
 sum_of_ids = 0
@@ -48,10 +47,11 @@ print(sum_of_ids)
 
 """
 PART B
+For a color, the minimum number of cubes needed for a game is the maximum of its counts over all draws. 
 """
 
 def process_game_B(game: str) -> int:
-    # Extract the draws and save the prefix for return value later
+    # Extract the draws
     game_prefix_idx = game.find(": ")
     draws = game[game_prefix_idx + len(": "):].split("; ")
 
@@ -60,7 +60,7 @@ def process_game_B(game: str) -> int:
         # For each draw, extract a list of pairs of form [n, color]
         pairs = [pair.split(" ") for pair in draw.split(", ")]
         
-        # Assess each pair, returning impossible if any number exceeds the max of that color
+        # Assess each pair, updating the draw-minimum of this color as needed
         for pair in pairs:
             n, color = int(pair[0]), pair[1].upper()
             if n > min_cubes[color]:
@@ -72,9 +72,7 @@ def process_game_B(game: str) -> int:
         power *= n
     return power
 
-# Testing
-# print(process_game_B(SAMPLE))
-
+# Solve
 sum_of_prods = 0
 for game in INFILE:
     sum_of_prods += process_game_B(game)
