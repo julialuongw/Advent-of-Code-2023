@@ -27,7 +27,7 @@ def process_game_A(game: str) -> int:
 
     for draw in draws:
         # For each draw, extract a list of pairs of form [n, color]
-        pairs = [pair.split(" ") for pair in draw.split(", ")]
+        pairs = [pair_s.split(" ") for pair_s in draw.split(", ")]
         
         # Assess each pair, returning impossible if any number exceeds the max of that color
         for pair in pairs:
@@ -58,7 +58,7 @@ def process_game_B(game: str) -> int:
     min_cubes = dict.fromkeys(["RED", "GREEN", "BLUE"], 0)
     for draw in draws:
         # For each draw, extract a list of pairs of form [n, color]
-        pairs = [pair.split(" ") for pair in draw.split(", ")]
+        pairs = [pair_s.split(" ") for pair_s in draw.split(", ")]
         
         # Assess each pair, updating the draw-minimum of this color as needed
         for pair in pairs:
